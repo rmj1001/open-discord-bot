@@ -10,7 +10,7 @@ for this project. Run the code below in your terminal to run the installation
 script. Otherwise just install the dependencies below yourself.
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmj1001/open-discord-bot/main/installDependencies.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmj1001/open-discord-bot/main/scripts/installDependencies.sh)"
 ```
 
 ## Install & Run Project
