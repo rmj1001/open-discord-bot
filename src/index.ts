@@ -26,6 +26,9 @@ bot.events.loadEvents();
 // Load node events
 nodeEvents.loadEvents();
 
+// Load all traditional commands
+bot.commands.loadAll();
+
 // Load all slash commands then register them
 bot.commands.loadAllSlashCommands();
 bot.commands.registerSlashCommands();
