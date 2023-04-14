@@ -68,8 +68,10 @@ export class CommandHandler
     /** Discord.js collection holding commands */
     cmds: Collection<any, any>;
 
+    slashCmds: Collection<any, any>;
+
     /** Array of slash command JSONs */
-    slashCmds: JSON[];
+    slashCmdJSONs: JSON[];
 
     /** Config settings from the Bot class */
     config: ConfigType;
@@ -128,8 +130,11 @@ export class CommandHandler
         // Array of slash command files (file path strings)
         this.slashCommandFiles = [];
 
+        // Array of JSONs for slash commands
+        this.slashCmdJSONs = [];
+
         // Collection of slash commands
-        this.slashCmds = [];
+        this.slashCmds = new Collection();
 
         // Establish REST route
         this.rest = new REST().setToken(this.config.token);
@@ -170,7 +175,7 @@ export class CommandHandler
             if ('data' in command && 'execute' in command)
             {
                 this.cmds.set(command.data.name, command);
-                this.slashCmds.push(command.data.toJSON());
+                this.slashCmdJSONs.push(command.data.toJSON());
                 console.log(`START: Loaded command '${command.data.name}'`);
             } else
             {
@@ -245,8 +250,8 @@ export class CommandHandler
             // Set a new item in the Collection with the key as the command name and the value as the exported module
             if ('data' in command && 'execute' in command)
             {
-                this.slashCmds.push(command.data.toJSON());
-                this.cmds.set(command.data.name, command);
+                this.slashCmdJSONs.push(command.data.toJSON());
+                this.slashCmds.set(command.data.name, command);
                 console.log(`START: Loaded slash command '${command.data.name}'`);
             } else
             {
@@ -264,15 +269,15 @@ export class CommandHandler
     {
         try
         {
-            console.log(`Started refreshing ${this.slashCmds.length} application (/) commands.`);
+            console.log(`Started refreshing ${this.slashCmdJSONs.length} application (/) commands.`);
 
             // The put method is used to fully refresh all commands in the guild with the current set
             const data = await this.rest.put(
                 Routes.applicationGuildCommands(this.config.clientId, this.config.guildId),
-                { body: this.slashCmds },
+                { body: this.slashCmdJSONs },
             );
 
-            console.log(`Successfully reloaded ${this.slashCmds.length} application (/) commands.`);
+            console.log(`Successfully reloaded ${this.slashCmdJSONs.length} application (/) commands.`);
         } catch (error)
         {
             // And of course, make sure you catch and log any errors!
@@ -288,10 +293,20 @@ export class CommandHandler
      */
     unloadSlashCommands(): void
     {
-        // TODO: Code this function.
+        // this.slashCommandFiles = [];
+        // this.slashCommandFolders = [];
+        // this.slashCmds.clear();
 
-        // Re-implement code from `this.unloadAll`
-        // De-register slash commands from Discord
+        // for (let i = 0; i < this.slashCommandFiles.length; i++)
+        // {
+        //     let file = this.slashCommandFiles[i];
+        //     let commandName = file.split('/')[-1].split('.ts')[0];
+        //     let command = this.slashCmds.get(commandName);
+        //     delete require.cache[require.resolve(`./${command.data.name}.ts`)];
+        // }
+
+        // TODO: De-register slash commands from Discord
+
         console.log("Slash command unloading not yet implemented.");
     }
 
