@@ -19,13 +19,13 @@ module.exports = {
     {
         let lyrics: string[] = [];
         lyrics[0] = `
-            Gotta turn the world into your dance floor
-            Determinate, determinate
-            Push until you can't and then demand more
-            Determinate, determinate
-            You and me together, we can make it better
-            Gotta turn the world into your dance floor
-            Determinate, determinate`;
+Gotta turn the world into your dance floor
+Determinate, determinate
+Push until you can't and then demand more
+Determinate, determinate
+You and me together, we can make it better
+Gotta turn the world into your dance floor
+Determinate, determinate`;
 
         for (let i = 0; i < lyrics.length; i++)
         {
