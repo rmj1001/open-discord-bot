@@ -3,21 +3,22 @@
 //   Project: OpenDiscordBot
 //   Version: 1.0
 //
-//   Command: ping
-//   Usage: /ping
-//   Description: Pong!
+//   Command: shutdown
+//   Usage: /shutdown
+//   Description: shuts down the bot
 //
 // ------------------------------------------------
 
+import { bot } from '../../../index';
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
-import { bot } from '../../index';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('Replies with Pong!'),
+        .setName('shutdown')
+        .setDescription('Shutdown the bot.'),
     async execute(interaction: ChatInputCommandInteraction)
     {
-        await interaction.reply(`🏓 API Latency is ${Math.round(bot.client.ws.ping)}ms.`);
+        await interaction.reply('Shutting down...');
+        bot.shutdown();
     },
 };
