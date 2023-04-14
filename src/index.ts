@@ -32,14 +32,3 @@ bot.commands.registerSlashCommands();
 
 // Log in to Discord with your client's token
 bot.client.login(bot.config.token);
-
-// Listen for shutdown processes
-process.on('SIGTERM', function ()
-{
-    bot.shutdown();
-});
-
-process.on('SIGINT', function ()
-{
-    bot.shutdown();
-});
