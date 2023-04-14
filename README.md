@@ -6,10 +6,12 @@ bots. It is meant to be easily installed on a Linux or MacOS system.
 ## Project Dependencies
 
 **Note:** You can run our custom installation script to install the dependencies
-for this project.
-Run `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmj1001/open-discord-bot/main/installDependencies.sh)"`
-in your terminal to run the installation script. Otherwise just install the
-dependencies below yourself.
+for this project. Run the code below in your terminal to run the installation
+script. Otherwise just install the dependencies below yourself.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmj1001/open-discord-bot/main/installDependencies.sh)"
+```
 
 ### [Homebrew](https://brew.sh)
 
