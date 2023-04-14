@@ -17,8 +17,7 @@ module.exports = {
         .setDescription('GOTTA TURN THE WORLD INTO YOUR DANCE FLOOR'),
     async execute(interaction: ChatInputCommandInteraction)
     {
-        let lyrics: string[] = [];
-        lyrics[0] = `
+        let lyrics: string = `
 Gotta turn the world into your dance floor
 Determinate, determinate
 Push until you can't and then demand more
@@ -27,9 +26,6 @@ You and me together, we can make it better
 Gotta turn the world into your dance floor
 Determinate, determinate`;
 
-        for (let i = 0; i < lyrics.length; i++)
-        {
-            await interaction.reply(lyrics[i]);
-        }
+        await interaction.reply(lyrics);
     },
 };
