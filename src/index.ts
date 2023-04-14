@@ -10,7 +10,7 @@
 // ------------------------------------------------
 
 // Imports
-import { Bot } from "./bot.ts";
+import { Bot } from "./lib/bot.ts";
 import { Events } from 'discord.js';
 import { config } from './config.ts';
 
