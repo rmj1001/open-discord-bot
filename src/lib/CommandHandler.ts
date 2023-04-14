@@ -10,7 +10,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { Collection, REST, Routes } from 'discord.js';
-import { ConfigType } from '../config';
+import { ConfigType } from '../settings/botconfig';
 
 /** The CommandHandler class is responsible for loading, unloading, and registering
 slash commands for a Discord bot. */

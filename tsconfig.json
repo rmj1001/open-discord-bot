@@ -26,7 +26,8 @@
         "src/index.ts"
     ],
     "include": [
-        "./**/*.ts"
+        "./**/*.ts",
+        "./**/*.ts.template",
     ],
     "exclude": [
         "node_modules",

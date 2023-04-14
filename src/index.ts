@@ -11,7 +11,7 @@
 
 // Imports
 import { Bot } from "./lib/Bot.ts";
-import { config } from './config.ts';
+import { config } from './settings/botconfig.ts';
 import { NodeEventHandler } from "./lib/NodeEventHandler.ts";
 
 // Initialize new BotProject object

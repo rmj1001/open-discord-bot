@@ -11,7 +11,7 @@
 
 import { SlashCommandBuilder, Interaction, ChatInputCommandInteraction } from "discord.js";
 import { bot } from "../../../index";
-import { config } from "../../../config";
+import { config } from "../../../settings/botconfig";
 
 module.exports = {
     data: new SlashCommandBuilder()

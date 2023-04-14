@@ -8,7 +8,7 @@
 // ------------------------------------------------
 
 import { Client, GatewayIntentBits } from 'discord.js';
-import { ConfigType } from '../config';
+import { ConfigType } from '../settings/botconfig';
 import { CommandHandler } from './CommandHandler';
 import { BotEventHandler } from './BotEventHandler';
 
