@@ -13,23 +13,11 @@ script. Otherwise just install the dependencies below yourself.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rmj1001/open-discord-bot/main/installDependencies.sh)"
 ```
 
-### [Homebrew](https://brew.sh)
+## Install & Run Project
 
-- `node`
-
-### NPM Dependencies
-
-- `typescript`
-- `discordjs`
-- `ts-node`
-
-## Project Instructions
-
-My reccomendation is to install [Homebrew](https://brew.sh/), then install
-NodeJS as a homebrew application, then install the programs listed above via
-NPM.
-
-The bot is meant to be run using `ts-node` to alleviate the tediousness of
-transpiling typescript code to javascript and copying non-TS files to a separate
-directory. To run the bot, go to the root folder of the project and run
-`./run.sh` in your BASH or ZSH shell.
+1. Clone this repository to your computer.
+2. Change directories to the top-level folder of the project.
+3. Change directories to `scripts`.
+4. Run your terminal program in either Bash or ZSH.
+5. Run `./installDependencies.sh` if you hadn't run the script above.
+6. Run `./run.sh`.
