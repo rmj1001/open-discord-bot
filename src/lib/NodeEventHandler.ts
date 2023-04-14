@@ -46,10 +46,10 @@ export class NodeEventHandler
             const event = require(filePath);
             if (event.once)
             {
-                process.once(event.name, (...args) => event.execute(...args));
+                process.on(event.name, (...args) => event.execute(...args));
             } else
             {
-                process.once(event.name, (...args) => event.execute(...args));
+                process.on(event.name, (...args) => event.execute(...args));
             }
         }
     }
