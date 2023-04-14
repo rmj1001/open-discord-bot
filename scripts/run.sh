@@ -15,5 +15,15 @@ echo "# ------------------------------------------------ #"
 echo "#          OPEN DISCORD BOT - TERMINAL             #"
 echo "# ------------------------------------------------ #"
 
-cd ../src
-ts-node ./index.ts
+directory=${PWD##*/}
+
+if [[ "$directory" == "scripts" ]]; then
+
+    ts-node ../src/index.ts
+
+else
+
+    cd scripts
+    ts-node ../src/index.ts
+
+fi
