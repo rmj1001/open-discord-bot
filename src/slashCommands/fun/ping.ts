@@ -9,14 +9,15 @@
 //
 // ------------------------------------------------
 
-import { SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { bot } from '../../index';
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with Pong!'),
-    async execute(interaction: any)
+    async execute(interaction: ChatInputCommandInteraction)
     {
-        await interaction.reply('Pong!');
+        await interaction.reply(`🏓 API Latency is ${Math.round(bot.client.ws.ping)}ms.`);
     },
 };

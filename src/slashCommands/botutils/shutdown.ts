@@ -10,13 +10,13 @@
 // ------------------------------------------------
 
 import { bot } from '../../index';
-import { SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('shutdown')
         .setDescription('Shutdown the bot.'),
-    async execute(interaction: any)
+    async execute(interaction: ChatInputCommandInteraction)
     {
         await interaction.reply('Shutting down...');
         bot.shutdown();
