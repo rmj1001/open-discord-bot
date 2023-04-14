@@ -18,6 +18,7 @@ module.exports = {
         .setDescription('Shutdown the bot.'),
     async execute(interaction: ChatInputCommandInteraction)
     {
+        // console.log("shutdown command run");
         await interaction.reply('Shutting down...');
         bot.shutdown();
     },
