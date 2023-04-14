@@ -10,7 +10,11 @@
 //
 // ------------------------------------------------
 
-
+/**
+ * Interface type for bot configuration settings
+ * 
+ * @interface ConfigType
+ */
 export interface ConfigType
 {
     token: string,
@@ -21,6 +25,10 @@ export interface ConfigType
     guildId: string;
 }
 
+/**
+ * Config settings for the discord bot
+ * @implements ConfigType
+ */
 export let config: ConfigType = {
     token: "",
     invite: "",

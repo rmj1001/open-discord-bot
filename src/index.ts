@@ -18,7 +18,7 @@ import { config } from './config.ts';
 export let bot = new Bot(__dirname, config);
 
 // Load all slash commands then register them
-bot.commands.loadAllSlashes();
+bot.commands.loadAllSlashCommands();
 bot.commands.registerSlashCommands();
 
 // When the client is ready, run this code (only once)

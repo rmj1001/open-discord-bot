@@ -12,13 +12,30 @@ import * as fs from 'fs';
 import { Client, Collection, GatewayIntentBits, REST, Routes } from 'discord.js';
 import { ConfigType } from './config';
 
+/** The Bot class is a TypeScript class that handles the creation and shutdown of a
+Discord bot client, as well as the initialization of a command handler. */
 export class Bot
 {
+    /** Configuration settings for the discord bot */
     config: ConfigType;
+
+    /** File path for root folder of the project */
     root: string;
+
+    /** Command handler for the bot */
     commands: CommandHandler;
+
+    /** Discord.js client */
     client: Client;
 
+    /**
+     * This is a constructor function that initializes properties and creates
+     * instances of the Bot class.
+     * @param {string} projectRootPath - A string representing the root path of the
+     * project.
+     * @param {ConfigType} config - The `config` parameter is of type `ConfigType`
+     * and likely contains configuration settings for the project.
+     */
     constructor(projectRootPath: string, config: ConfigType)
     {
         this.root = projectRootPath;
@@ -27,6 +44,11 @@ export class Bot
         this.client = new Client({ intents: [GatewayIntentBits.Guilds] });
     }
 
+    /**
+     * The function shuts down the discord bot client and exits the node 
+     * process.
+     * @returns {void}
+     */
     shutdown(): void
     {
         console.log(`Shutting down...`);
@@ -39,23 +61,42 @@ export class Bot
     }
 }
 
+/** The CommandHandler class is responsible for loading, unloading, and registering
+slash commands for a Discord bot. */
 export class CommandHandler
 {
+    /** Discord.js collection holding commands */
     cmds: Collection<any, any>;
+
+    /** Array of slash command JSONs */
     slashCmds: JSON[];
 
+    /** Config settings from the Bot class */
     config: ConfigType;
 
+    /** File path for the root folder of the project */
     root: string;
 
+    /** Path for the top-level commands folder */
     commandsPath: string;
+
+    /** Array of path strings for containing command modules */
     commandFolders: string[];
+
+    /** Array of path strings for files inside folder modules inside 
+     * `src/commands` */
     commandFiles: string[];
 
+    /** File path string for the folder containing slash command modules */
     slashCommandsPath: string;
+
+    /** Array of path strings for slash command module folders */
     slashCommandFolders: string[];
+
+    /** Array of path strings for slash command files inside module folders */
     slashCommandFiles: string[];
 
+    /** REST instance for registering slash commands with Discord */
     private rest: REST;
 
     constructor(rootPath: string, config: ConfigType)
@@ -94,6 +135,13 @@ export class CommandHandler
         this.rest = new REST().setToken(this.config.token);
     }
 
+    /**
+     * This function loads all traditional command files from a specified 
+     * directory and adds them to a collection, while also checking for 
+     * required properties.
+     * 
+     * @returns {void}
+     */
     loadAll(): void
     {
         // Load set of folder (module) names
@@ -131,6 +179,12 @@ export class CommandHandler
         }
     }
 
+    /**
+     * The function unloads all traditional command files and clears related 
+     * data structures.
+     * 
+     * @returns {void}
+     */
     unloadAll(): void
     {
         this.commandFiles = [];
@@ -146,13 +200,25 @@ export class CommandHandler
         }
     }
 
+    /**
+     * The function reloads all traditional commands by unloading and then 
+     * loading them again.
+     * 
+     * @returns {void}
+     */
     reloadAll(): void
     {
         this.unloadAll();
         this.loadAll();
     }
 
-    loadAllSlashes(): void
+    /**
+     * The function unloads all slash command files and clears related 
+     * data structures.
+     * 
+     * @returns {void}
+     */
+    loadAllSlashCommands(): void
     {
         // Load set of folder (module) names
         this.slashCommandFolders = fs.readdirSync(this.slashCommandsPath).filter(file =>
@@ -189,7 +255,12 @@ export class CommandHandler
         }
     }
 
-    async registerSlashCommands()
+    /**
+     * This function refreshes the application commands for a Discord bot.
+     * 
+     * @returns {Promise<void>}
+     */
+    async registerSlashCommands(): Promise<void>
     {
         try
         {
@@ -207,5 +278,33 @@ export class CommandHandler
             // And of course, make sure you catch and log any errors!
             console.error(error);
         }
+    }
+
+    /**
+     * The function unloads all traditional command files and clears related 
+     * data structures.
+     * 
+     * @returns {void}
+     */
+    unloadSlashCommands(): void
+    {
+        // TODO: Code this function.
+
+        // Re-implement code from `this.unloadAll`
+        // De-register slash commands from Discord
+        console.log("Slash command unloading not yet implemented.");
+    }
+
+    /**
+     * The function reloads all traditional commands by unloading and then 
+     * loading them again.
+     * 
+     * @returns {void}
+     */
+    reloadSlashCommands(): void
+    {
+        this.unloadSlashCommands();
+        this.loadAllSlashCommands();
+        this.registerSlashCommands();
     }
 };
