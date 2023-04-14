@@ -16,8 +16,7 @@ script. Otherwise just install the dependencies below yourself.
 ## Install & Run Project
 
 1. Clone this repository to your computer.
-2. Change directories to the top-level folder of the project.
-3. Change directories to `scripts`.
-4. Run your terminal program in either Bash or ZSH.
-5. Run `./installDependencies.sh` if you hadn't run the script above.
-6. Run `./run.sh`.
+2. Change directories to the top-level folder of the project, then to `scripts`.
+3. Run your terminal program in either Bash or ZSH.
+4. Run `./installDependencies.sh` if you hadn't run the script above.
+5. Run `./run.sh`.
