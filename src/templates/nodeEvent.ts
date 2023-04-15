@@ -1,9 +1,12 @@
-module.exports = {
+import { NodeEvent } from "../types/NodeEvent";
+
+let event: NodeEvent = {
     name: 'name',
-    // Stops listening after this event is called once.
     once: false,
     execute()
     {
         // code here
     },
 };
+
+module.exports = event;

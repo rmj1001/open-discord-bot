@@ -11,8 +11,9 @@
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { bot } from '../../../index';
+import { SlashCommandType } from '../../../types/SlashCommand';
 
-module.exports = {
+let slashCommand: SlashCommandType = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with Pong!'),
@@ -21,3 +22,5 @@ module.exports = {
         await interaction.reply(`🏓 API Latency is ${Math.round(bot.client.ws.ping)}ms.`);
     },
 };
+
+module.exports = slashCommand;

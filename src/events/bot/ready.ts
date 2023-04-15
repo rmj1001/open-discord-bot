@@ -1,12 +1,15 @@
 import { Events } from 'discord.js';
 import { bot } from '../../index';
+import { BotEvent } from '../../types/BotEvent';
 
-module.exports = {
+let event: BotEvent = {
     name: Events.ClientReady,
     once: true,
-    execute(client: any)
+    async execute(client: any)
     {
-        console.log(`${bot.config.project} v${bot.config.version} has started.`);
+        console.log(`${bot.config.botCodeName} v${bot.config.botVersionNumber} has started.`);
         console.log(`Ready! Logged in as ${client.user.tag}`);
     },
 };
+
+module.exports = event;

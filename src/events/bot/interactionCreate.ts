@@ -1,7 +1,8 @@
 import { Events, Interaction } from 'discord.js';
 import { bot } from '../../index';
+import { BotEvent } from '../../types/BotEvent';
 
-module.exports = {
+let event: BotEvent = {
     name: Events.InteractionCreate,
     once: false,
     async execute(interaction: Interaction)
@@ -58,3 +59,5 @@ module.exports = {
         }
     },
 };
+
+module.exports = event;

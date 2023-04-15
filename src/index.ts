@@ -11,11 +11,11 @@
 
 // Imports
 import { Bot } from "./lib/Bot.ts";
-import { config } from './settings/botconfig.ts';
 import { NodeEventHandler } from "./lib/NodeEventHandler.ts";
+import devSettings from "./settings/devSettings.ts";
 
 // Initialize new BotProject object
-export let bot = new Bot(__dirname, config);
+export let bot = new Bot(__dirname, devSettings);
 
 // Initialize new Node events handler
 export const nodeEvents = new NodeEventHandler(__dirname);
@@ -34,4 +34,4 @@ bot.commands.loadAllSlashCommands();
 bot.commands.registerSlashCommands();
 
 // Log in to Discord with your client's token
-bot.client.login(bot.config.token);
+bot.client.login(devSettings.token);

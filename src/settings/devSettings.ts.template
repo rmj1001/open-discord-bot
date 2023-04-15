@@ -1,0 +1,33 @@
+export type DeveloperSettings = {
+    "token": string,
+    "botInvite": string,
+
+    "botOwnerId": string,
+    "clientId": string,
+
+    "botCodeName": string,
+    "botVersionNumber": number,
+
+    "devGuild": {
+        "guildId": string,
+        "consoleChannelId": string;
+    };
+};
+
+let devSettings: DeveloperSettings = {
+    "token": "",
+    "botInvite": "",
+
+    "botOwnerId": "",
+    "clientId": "",
+
+    "botCodeName": "",
+    "botVersionNumber": 1,
+
+    "devGuild": {
+        "guildId": "",
+        "consoleChannelId": "",
+    }
+};
+
+export default devSettings;

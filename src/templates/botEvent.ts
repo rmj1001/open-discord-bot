@@ -1,11 +1,13 @@
 import { Events } from 'discord.js';
+import { BotEvent } from '../types/BotEvent';
 
-module.exports = {
+let event: BotEvent = {
     name: Events.ClientReady,
-    // Stops listening after this event is called once.
     once: false,
-    execute(client: any)
+    async execute(client: any)
     {
         // code here
-    },
+    }
 };
+
+module.exports = event;

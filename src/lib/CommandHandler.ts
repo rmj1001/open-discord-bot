@@ -11,6 +11,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Collection, REST, Routes } from 'discord.js';
 import { ConfigType } from '../settings/botconfig';
+import { DeveloperSettings } from '../settings/devSettings';
 
 /** The CommandHandler class is responsible for loading, unloading, and registering
 slash commands for a Discord bot. */
@@ -25,7 +26,7 @@ export class CommandHandler
     slashCmdJSONs: JSON[];
 
     /** Config settings from the Bot class */
-    config: ConfigType;
+    config: DeveloperSettings;
 
     /** File path for the root folder of the project */
     root: string;
@@ -52,7 +53,7 @@ export class CommandHandler
     /** REST instance for registering slash commands with Discord */
     private rest: REST;
 
-    constructor(rootPath: string, config: ConfigType)
+    constructor(rootPath: string, config: DeveloperSettings)
     {
         // config
         this.config = config;
@@ -224,7 +225,7 @@ export class CommandHandler
 
             // The put method is used to fully refresh all commands in the guild with the current set
             const data = await this.rest.put(
-                Routes.applicationGuildCommands(this.config.clientId, this.config.guildId),
+                Routes.applicationGuildCommands(this.config.clientId, this.config.devGuild.guildId),
                 { body: this.slashCmdJSONs },
             );
 

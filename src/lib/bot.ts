@@ -8,16 +8,16 @@
 // ------------------------------------------------
 
 import { Client, GatewayIntentBits } from 'discord.js';
-import { ConfigType } from '../settings/botconfig';
 import { CommandHandler } from './CommandHandler';
 import { BotEventHandler } from './BotEventHandler';
+import { DeveloperSettings } from '../settings/devSettings';
 
 /** The Bot class is a TypeScript class that handles the creation and shutdown of a
 Discord bot client, as well as the initialization of a command handler. */
 export class Bot
 {
     /** Configuration settings for the discord bot */
-    config: ConfigType;
+    config: DeveloperSettings;
 
     /** File path for root folder of the project */
     root: string;
@@ -38,7 +38,7 @@ export class Bot
      * @param {ConfigType} config - The `config` parameter is of type `ConfigType`
      * and likely contains configuration settings for the project.
      */
-    constructor(projectRootPath: string, config: ConfigType)
+    constructor(projectRootPath: string, config: DeveloperSettings)
     {
         this.root = projectRootPath;
         this.config = config;
