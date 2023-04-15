@@ -11,6 +11,7 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { CommandHandler } from './CommandHandler';
 import { BotEventHandler } from './BotEventHandler';
 import { DeveloperSettings } from '../settings/devSettings';
+import { logger } from './Logger';
 
 /** The Bot class is a TypeScript class that handles the creation and shutdown of a
 Discord bot client, as well as the initialization of a command handler. */
@@ -30,6 +31,8 @@ export class Bot
     /** Discord.js client */
     client: Client;
 
+    logger;
+
     /**
      * This is a constructor function that initializes properties and creates
      * instances of the Bot class.
@@ -45,20 +48,22 @@ export class Bot
         this.commands = new CommandHandler(this.root, this.config);
         this.client = new Client({ intents: [GatewayIntentBits.Guilds] });
         this.events = new BotEventHandler(this.root, this.client);
+
+        this.logger = logger;
     }
 
     /**
      * The function shuts down the discord bot client and exits the node 
      * process.
-     * @returns {void}
+     * @returns {Promise<void>}
      */
-    shutdown(): void
+    async shutdown(): Promise<void>
     {
-        console.log(`Shutting down...`);
+        await this.logger.log("Shutting down...");
 
         this.client.destroy();
 
-        console.log(`Shut down.`);
+        await this.logger.log("Bot is shut down.");
 
         process.exit(0);
     }

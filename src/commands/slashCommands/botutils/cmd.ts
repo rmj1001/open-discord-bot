@@ -44,6 +44,8 @@ let slashCommand: SlashCommandType = {
 
         if (subCmd === 'load')
         {
+            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
+
             await interaction.reply
                 (`Command /cmd ${subCmd} was run.`);
             return;
@@ -51,6 +53,8 @@ let slashCommand: SlashCommandType = {
 
         else if (subCmd === 'unload')
         {
+            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
+
             await interaction.reply
                 (`Command /cmd ${subCmd} was run.`);
             return;
@@ -58,6 +62,8 @@ let slashCommand: SlashCommandType = {
 
         else if (subCmd === 'reload')
         {
+            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
+
             await interaction.reply
                 (`Command /cmd ${subCmd} was run.`);
             return;
@@ -65,6 +71,8 @@ let slashCommand: SlashCommandType = {
 
         else if (subCmd === 'reload-all')
         {
+            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
+
             await interaction.reply
                 (`Command /cmd ${subCmd} was run.`);
             return;
@@ -72,8 +80,10 @@ let slashCommand: SlashCommandType = {
 
         else
         {
+            bot.logger.log(`Command /cmd ${subCmd} was run.`);
+
             await interaction.reply
-                (`Unknown subcommand ${subCmd} on this slash command.`);
+                (`Command /cmd ${subCmd} was run.`);
             return;
         }
     },

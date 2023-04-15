@@ -7,8 +7,8 @@ let event: BotEvent = {
     once: true,
     async execute(client: any)
     {
-        console.log(`${bot.config.botCodeName} v${bot.config.botVersionNumber} has started.`);
-        console.log(`Ready! Logged in as ${client.user.tag}`);
+        bot.logger.log(`${bot.config.botCodeName} v${bot.config.botVersionNumber} has started.`);
+        bot.logger.log(`Logged in as ${client.user.tag}`);
     },
 };
 
