@@ -10,7 +10,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { Collection, REST, Routes } from 'discord.js';
-import { ConfigType } from '../settings/botconfig';
 import { DeveloperSettings } from '../settings/devSettings';
 
 /** The CommandHandler class is responsible for loading, unloading, and registering
