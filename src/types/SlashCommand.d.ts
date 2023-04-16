@@ -5,5 +5,6 @@ import { SlashCommandBuilder } from "discord.js";
  */
 export type SlashCommandType = {
     data: any,
+    ownerOnly?: boolean,
     async execute(interaction: ChatInputCommandInteraction): Promise<void>;
 };

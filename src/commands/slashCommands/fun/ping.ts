@@ -19,7 +19,9 @@ let slashCommand: SlashCommandType = {
         .setDescription('Replies with Pong!'),
     async execute(interaction: ChatInputCommandInteraction)
     {
-        await interaction.reply(`🏓 API Latency is ${Math.round(bot.client.ws.ping)}ms.`);
+        const sent = await interaction.reply({ content: 'Pinging...', fetchReply: true });
+
+        await interaction.editReply(`🏓 Roundtrip latency: ${sent.createdTimestamp - interaction.createdTimestamp}ms.\n🏓 API Latency is ${Math.round(bot.client.ws.ping)}ms.`);
     },
 };
 

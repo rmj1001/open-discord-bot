@@ -9,16 +9,20 @@
 //
 // ------------------------------------------------
 
-import { bot } from '../../../index';
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { bot } from '../../../index';
+import { SlashCommandType } from '../../../types/SlashCommand';
 
-module.exports = {
+let slashCommand: SlashCommandType = {
     data: new SlashCommandBuilder()
         .setName('shutdown')
         .setDescription('Shutdown the bot.'),
+    ownerOnly: true,
     async execute(interaction: ChatInputCommandInteraction)
     {
         await interaction.reply('Shutting down...');
         bot.shutdown();
     },
 };
+
+module.exports = slashCommand;

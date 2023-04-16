@@ -1,6 +1,7 @@
 import { Events, Interaction } from 'discord.js';
 import { bot } from '../../index';
 import { BotEvent } from '../../types/BotEvent';
+import { SlashCommandType } from '../../types/SlashCommand';
 
 let event: BotEvent = {
     name: Events.InteractionCreate,
@@ -10,7 +11,7 @@ let event: BotEvent = {
         if (!interaction.isChatInputCommand()) return;
 
         const command = bot.commands.cmds.get(interaction.commandName);
-        const slashCommand = bot.commands.slashCmds.get(interaction.commandName);
+        const slashCommand: SlashCommandType = bot.slashCommands.commands.get(interaction.commandName);
 
         // If no traditional command or slash command was found
         if (!command && !slashCommand)
@@ -42,6 +43,13 @@ let event: BotEvent = {
         // If the command was a slash command, run its interaction
         if (slashCommand)
         {
+            // checks to see if the command is flagged as ownerOnly and the user isnt the owner
+            if (slashCommand.ownerOnly && interaction.user.id !== bot.config.botOwnerId)
+            {
+                await interaction.reply("This command only works for the bot owner!");
+                return;
+            }
+
             try
             {
                 await slashCommand.execute(interaction);

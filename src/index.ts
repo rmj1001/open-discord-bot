@@ -27,11 +27,10 @@ bot.events.loadEvents();
 nodeEvents.loadEvents();
 
 // Load all traditional commands
-bot.commands.loadAll();
 
 // Load all slash commands then register them
-bot.commands.loadAllSlashCommands();
-bot.commands.registerSlashCommands();
+bot.slashCommands.loadAll();
+bot.slashCommands.registerAll();
 
 // Log in to Discord with your client's token
 bot.client.login(devSettings.token);

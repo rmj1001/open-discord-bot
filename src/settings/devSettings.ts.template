@@ -12,6 +12,10 @@ export type DeveloperSettings = {
         "guildId": string,
         "consoleChannelId": string;
     };
+
+    "botStatus"?: "online" | "idle" | "dnd" | "invisible",
+
+    "botActivityStrings"?: string[],
 };
 
 let devSettings: DeveloperSettings = {

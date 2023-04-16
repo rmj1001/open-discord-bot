@@ -8,10 +8,11 @@
 // ------------------------------------------------
 
 import { Client, GatewayIntentBits } from 'discord.js';
-import { CommandHandler } from './CommandHandler';
+import { SlashCommandHandler } from './SlashCommandHandler';
 import { BotEventHandler } from './BotEventHandler';
 import { DeveloperSettings } from '../settings/devSettings';
 import { logger } from './Logger';
+import { TradCommandHandler } from './TraditionalCommandHandler';
 
 /** The Bot class is a TypeScript class that handles the creation and shutdown of a
 Discord bot client, as well as the initialization of a command handler. */
@@ -24,7 +25,10 @@ export class Bot
     root: string;
 
     /** Command handler for the bot */
-    commands: CommandHandler;
+    commands: TradCommandHandler;
+
+    /** Slash Command handler for the bot */
+    slashCommands: SlashCommandHandler;
 
     events: BotEventHandler;
 
@@ -45,7 +49,10 @@ export class Bot
     {
         this.root = projectRootPath;
         this.config = config;
-        this.commands = new CommandHandler(this.root, this.config);
+
+        this.commands = new TradCommandHandler(this.root, this.config);
+        this.slashCommands = new SlashCommandHandler(this.root, this.config);
+
         this.client = new Client({ intents: [GatewayIntentBits.Guilds] });
         this.events = new BotEventHandler(this.root, this.client);
 

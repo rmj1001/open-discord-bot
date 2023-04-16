@@ -21,26 +21,43 @@ let slashCommand: SlashCommandType = {
             load
                 .setName('load')
                 .setDescription('Load a command')
+                .addStringOption(command => (
+                    command
+                        .setName("command")
+                        .setDescription("The command to load")
+                ))
         ))
         .addSubcommand(unload =>
         (
             unload
                 .setName('unload')
                 .setDescription('Unload a command')
+                .addStringOption(command => (
+                    command
+                        .setName("command")
+                        .setDescription("The command to load")
+                ))
         ))
         .addSubcommand(reload => (
             reload
                 .setName('reload')
                 .setDescription('Reload a command')
+                .addStringOption(command => (
+                    command
+                        .setName("command")
+                        .setDescription("The command to load")
+                ))
         ))
         .addSubcommand(reloadAll => (
             reloadAll
                 .setName('reload-all')
                 .setDescription('Reload all commands')
         )),
+    ownerOnly: true,
     async execute(interaction: ChatInputCommandInteraction)
     {
         const subCmd = interaction.options.getSubcommand();
+        const cmd = interaction.options.getString('command');
 
         if (subCmd === 'load')
         {

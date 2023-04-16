@@ -17,19 +17,19 @@ async function sendToConsole(text: string): Promise<void>
 }
 
 export let logger = {
-    async log(text: string)
+    async log(text: string | any)
     {
         console.log(`LOG: ${text}`);
-        await sendToConsole(`**LOG:**\n\`\`\`${text}\`\`\``);
+        await sendToConsole(`\`\`\`md\n# LOG\n\n${text}\n\`\`\``);
     },
-    async warn(text: string)
+    async warn(text: string | any)
     {
-        console.log(`WARN: ${text}`);
-        await sendToConsole(`**WARN:**\n\`\`\`${text}\`\`\``);
+        console.log(`WARNING: ${text}`);
+        await sendToConsole(`\`\`\`md\n< WARNING >\n\n${text}\n\`\`\``);
     },
-    async error(text: string)
+    async error(text: string | any)
     {
         console.log(`ERROR: ${text}`);
-        await sendToConsole(`**ERROR:**\n\`\`\`${text}\`\`\``);
+        await sendToConsole(`\`\`\`md\n* ERROR *\n\n${text}\n\`\`\``);
     }
 };

@@ -10,13 +10,20 @@
 // ------------------------------------------------
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandType } from '../types/SlashCommand';
+import { bot } from '../index';
 
-module.exports = {
+let slashCommand: SlashCommandType = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with Pong!'),
+    ownerOnly: false,
     async execute(interaction: ChatInputCommandInteraction)
     {
-        await interaction.reply('Pong!');
+        if (this.ownerOnly === true && interaction.user.id !== bot.config.botOwnerId) return;
+
+        // code here
     },
 };
+
+module.exports = slashCommand;
