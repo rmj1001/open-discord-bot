@@ -1,4 +1,4 @@
-import { NodeEvent } from "../types/NodeEvent";
+import { NodeEvent } from "@mytypes/NodeEvent";
 
 let event: NodeEvent = {
     name: 'name',

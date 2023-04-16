@@ -10,8 +10,9 @@
 // ------------------------------------------------
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandType } from '@mytypes/SlashCommand';
 
-module.exports = {
+let slashCommand: SlashCommandType = {
     data: new SlashCommandBuilder()
         .setName('determinate')
         .setDescription('GOTTA TURN THE WORLD INTO YOUR DANCE FLOOR'),
@@ -29,3 +30,5 @@ Determinate, determinate`;
         await interaction.reply(lyrics);
     },
 };
+
+module.exports = slashCommand;

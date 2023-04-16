@@ -18,9 +18,32 @@
             "node_modules/@types"
         ],
         "sourceMap": false,
-        "baseUrl": "./src",
         "allowImportingTsExtensions": true,
-        "noEmit": true
+        "noEmit": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@commands/*": [
+                "commands/*"
+            ],
+            "@events/*": [
+                "events/*"
+            ],
+            "@lib/*": [
+                "lib/*"
+            ],
+            "@settings/*": [
+                "settings/*"
+            ],
+            "@templates/*": [
+                "templates/*"
+            ],
+            "@mytypes/*": [
+                "types/*"
+            ],
+            "@index": [
+                "index"
+            ]
+        },
     },
     "files": [
         "src/index.ts"
@@ -33,4 +56,10 @@
         "node_modules",
         "dist"
     ],
+    "ts-node": {
+        // Do not forget to `npm i -D tsconfig-paths`
+        "require": [
+            "tsconfig-paths/register"
+        ]
+    }
 }

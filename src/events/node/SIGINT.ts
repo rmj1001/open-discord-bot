@@ -1,5 +1,5 @@
-import { bot } from '../../index';
-import { NodeEvent } from "../../types/NodeEvent";
+import { bot } from 'index';
+import { NodeEvent } from "@mytypes/NodeEvent";
 
 let event: NodeEvent = {
     name: 'SIGINT',

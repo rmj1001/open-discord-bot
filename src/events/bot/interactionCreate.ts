@@ -1,7 +1,7 @@
 import { Events, Interaction } from 'discord.js';
-import { bot } from '../../index';
-import { BotEvent } from '../../types/BotEvent';
-import { SlashCommandType } from '../../types/SlashCommand';
+import { bot } from 'index';
+import { BotEvent } from '@mytypes/BotEvent';
+import { SlashCommandType } from '@mytypes/SlashCommand';
 
 let event: BotEvent = {
     name: Events.InteractionCreate,
@@ -10,7 +10,7 @@ let event: BotEvent = {
     {
         if (!interaction.isChatInputCommand()) return;
 
-        const command = bot.commands.cmds.get(interaction.commandName);
+        const command = bot.commands.commands.get(interaction.commandName);
         const slashCommand: SlashCommandType = bot.slashCommands.commands.get(interaction.commandName);
 
         // If no traditional command or slash command was found

@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js';
-import { bot } from '../index';
+import { bot } from 'index';
 
 async function sendToConsole(text: string): Promise<void>
 {

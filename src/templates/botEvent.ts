@@ -1,5 +1,5 @@
 import { Events } from 'discord.js';
-import { BotEvent } from '../types/BotEvent';
+import { BotEvent } from '@mytypes/BotEvent';
 
 let event: BotEvent = {
     name: Events.ClientReady,

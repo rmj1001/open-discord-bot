@@ -35,7 +35,7 @@ echo "NodeJS installed."
 clear
 echo "Installing project dependencies..."
 sleep 5
-npm install --global typescript discordjs ts-node || {
+npm install --global typescript discordjs ts-node tsconfig-paths || {
     echo "Dependency installation failed"
     sleep 2
     exit 1

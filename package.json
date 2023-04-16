@@ -2,5 +2,8 @@
     "module": "esnext",
     "scripts": {
         "start": "ts-node ./src/index.ts"
+    },
+    "devDependencies": {
+        "tsconfig-paths": "^4.2.0"
     }
 }

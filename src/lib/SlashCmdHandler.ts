@@ -10,8 +10,8 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { Collection, REST, Routes } from 'discord.js';
-import { DeveloperSettings } from '../settings/devSettings';
-import { bot } from '../index';
+import { DeveloperSettings } from '@settings/devSettings';
+import { bot } from 'index';
 
 /** The CommandHandler class is responsible for loading, unloading, and registering
 slash commands for a Discord bot. */
@@ -48,7 +48,7 @@ export class SlashCommandHandler
         this.root = rootPath;
 
         // Path for slash commands folder
-        this.commandsPath = path.join(this.root, 'commands', 'slashCommands');
+        this.commandsPath = path.join(this.root, 'commands', 'slash');
 
         // Array of slash command modules (folder path strings)
         this.modules = new Collection();

@@ -10,8 +10,8 @@
 // ------------------------------------------------
 
 import { SlashCommandBuilder, ChatInputCommandInteraction, SlashCommandSubcommandBuilder } from "discord.js";
-import { bot } from "../../../index";
-import { SlashCommandType } from "../../../types/SlashCommand";
+import { bot } from "index";
+import { SlashCommandType } from "@mytypes/SlashCommand";
 
 let slashCommand: SlashCommandType = {
     data: new SlashCommandBuilder()

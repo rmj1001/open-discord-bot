@@ -10,9 +10,9 @@
 // ------------------------------------------------
 
 // Imports
-import { Bot } from "./lib/Bot.ts";
-import { NodeEventHandler } from "./lib/NodeEventHandler.ts";
-import devSettings from "./settings/devSettings.ts";
+import { Bot } from "@lib/Bot.ts";
+import { NodeEventHandler } from "@lib/NodeEventHandler.ts";
+import devSettings from "@settings/devSettings.ts";
 
 // Initialize new BotProject object
 export let bot = new Bot(__dirname, devSettings);
@@ -27,6 +27,7 @@ bot.events.loadEvents();
 nodeEvents.loadEvents();
 
 // Load all traditional commands
+bot.commands.loadAll();
 
 // Load all slash commands then register them
 bot.slashCommands.loadAll();
