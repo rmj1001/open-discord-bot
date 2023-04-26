@@ -15,23 +15,36 @@ import { NodeEventHandler } from "@lib/NodeEventHandler.ts";
 import devSettings from "@settings/devSettings.ts";
 
 // Initialize new BotProject object
-export let bot = new Bot(__dirname, devSettings);
+export const bot = new Bot();
 
 // Initialize new Node events handler
-export const nodeEvents = new NodeEventHandler(__dirname);
+export const nodeEvents = new NodeEventHandler(bot.config.rootFolder);
 
-// Load bot events
-bot.events.loadEvents();
+let header = `\n# ------------------------------------------------ #`;
+header = `${header}\n#                 OPEN DISCORD BOT                 #`;
+header = `${header}\n# ------------------------------------------------ #`;
 
-// Load node events
-nodeEvents.loadEvents();
+async function initializeBot()
+{
+    await bot.logger.log(header);
 
-// Load all traditional commands
-bot.commands.loadAll();
+    // Load bot events
+    bot.events.loadEvents();
 
-// Load all slash commands then register them
-bot.slashCommands.loadAll();
-bot.slashCommands.registerAll();
+    // Load node events
+    nodeEvents.loadEvents();
 
-// Log in to Discord with your client's token
-bot.client.login(devSettings.token);
+    // Log in to Discord with your client's token
+    await bot.client.login(devSettings.token);
+
+    // Load all slash commands then register them
+    await bot.slashCommands.loadAll();
+
+    await bot.slashCommands.registerAll();
+
+    // Load all traditional commands
+    bot.commands.loadAll();
+
+}
+
+initializeBot();

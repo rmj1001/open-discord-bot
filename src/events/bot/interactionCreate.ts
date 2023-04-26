@@ -16,7 +16,7 @@ let event: BotEvent = {
         // If no traditional command or slash command was found
         if (!command && !slashCommand)
         {
-            console.error(`No command matching ${interaction.commandName} was found.`);
+            bot.logger.error(`No command matching ${interaction.commandName} was found.`);
             await interaction.reply(`No command matching ${interaction.commandName} was found.`);
             return;
         }
@@ -29,7 +29,7 @@ let event: BotEvent = {
                 await command.execute(interaction);
             } catch (error)
             {
-                console.error(error);
+                bot.logger.error(error);
                 if (interaction.replied || interaction.deferred)
                 {
                     await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
@@ -55,7 +55,7 @@ let event: BotEvent = {
                 await slashCommand.execute(interaction);
             } catch (error)
             {
-                console.error(error);
+                bot.logger.error(error);
                 if (interaction.replied || interaction.deferred)
                 {
                     await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });

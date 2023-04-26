@@ -11,10 +11,6 @@
 
 clear
 
-echo "# ------------------------------------------------ #"
-echo "#          OPEN DISCORD BOT - TERMINAL             #"
-echo "# ------------------------------------------------ #"
-
 directory=${PWD##*/}
 
 if [[ "$directory" == "scripts" ]]; then

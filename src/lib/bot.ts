@@ -10,8 +10,8 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import { SlashCommandHandler } from '@lib/SlashCmdHandler';
 import { BotEventHandler } from '@lib/BotEventHandler';
-import { DeveloperSettings } from '@settings/devSettings';
-import { logger } from '@lib/Logger';
+import devSettings, { DeveloperSettings } from '@settings/devSettings';
+import { Logger } from '@lib/Logger';
 import { TradCommandHandler } from '@lib/TradCmdHandler';
 
 /** The Bot class is a TypeScript class that handles the creation and shutdown of a
@@ -20,9 +20,6 @@ export class Bot
 {
     /** Configuration settings for the discord bot */
     config: DeveloperSettings;
-
-    /** File path for root folder of the project */
-    root: string;
 
     /** Command handler for the bot */
     commands: TradCommandHandler;
@@ -35,7 +32,7 @@ export class Bot
     /** Discord.js client */
     client: Client;
 
-    logger;
+    logger: Logger;
 
     /**
      * This is a constructor function that initializes properties and creates
@@ -45,18 +42,17 @@ export class Bot
      * @param {ConfigType} config - The `config` parameter is of type `ConfigType`
      * and likely contains configuration settings for the project.
      */
-    constructor(projectRootPath: string, config: DeveloperSettings)
+    constructor()
     {
-        this.root = projectRootPath;
-        this.config = config;
+        this.config = devSettings;
 
-        this.commands = new TradCommandHandler(this.root, this.config);
-        this.slashCommands = new SlashCommandHandler(this.root, this.config);
+        this.commands = new TradCommandHandler(this.config.rootFolder, this.config);
+        this.slashCommands = new SlashCommandHandler(this.config.rootFolder, this.config);
 
         this.client = new Client({ intents: [GatewayIntentBits.Guilds] });
-        this.events = new BotEventHandler(this.root, this.client);
+        this.events = new BotEventHandler(this.config.rootFolder, this.client);
 
-        this.logger = logger;
+        this.logger = new Logger(this.config.logFolder);
     }
 
     /**

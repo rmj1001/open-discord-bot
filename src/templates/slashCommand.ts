@@ -20,8 +20,6 @@ let slashCommand: SlashCommandType = {
     ownerOnly: false,
     async execute(interaction: ChatInputCommandInteraction)
     {
-        if (this.ownerOnly === true && interaction.user.id !== bot.config.botOwnerId) return;
-
         // code here
     },
 };

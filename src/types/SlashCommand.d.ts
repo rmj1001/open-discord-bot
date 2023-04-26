@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 /**
  * Slash Command Type
@@ -6,5 +6,6 @@ import { SlashCommandBuilder } from "discord.js";
 export type SlashCommandType = {
     data: any,
     ownerOnly?: boolean,
-    async execute(interaction: ChatInputCommandInteraction): Promise<void>;
+    async execute?(interaction: ChatInputCommandInteraction): Promise<void>;
+    async autocomplete?(interaction: ChatInputCommandInteraction): Promise<void>;
 };

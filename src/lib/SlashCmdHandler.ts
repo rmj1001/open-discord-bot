@@ -39,6 +39,15 @@ export class SlashCommandHandler
     /** REST instance for registering slash commands with Discord */
     private rest: REST;
 
+    /**
+     * This is a constructor function that initializes various properties and
+     * collections for a TypeScript class.
+     * @param {string} rootPath - A string representing the root path of the
+     * project folder.
+     * @param {DeveloperSettings} config - The `config` parameter is an object that
+     * contains developer settings for the project. It is likely to include things
+     * like the bot token, database credentials, and other configuration options.
+     */
     constructor(rootPath: string, config: DeveloperSettings)
     {
         // config
@@ -70,7 +79,6 @@ export class SlashCommandHandler
      * 
      * @returns {void}
      */
-
     populateModules(): void
     {
         // Populate this.modules
@@ -83,6 +91,12 @@ export class SlashCommandHandler
 
     }
 
+    /**
+     * This function populates a map of command files by iterating through the
+     * modules and their respective file paths.
+     * 
+     * @returns {void}
+     */
     populateCommands(): void
     {
         this.modules.forEach((modulePath, moduleName) =>
@@ -102,10 +116,12 @@ export class SlashCommandHandler
      * The function unloads all slash command files and clears related 
      * data structures.
      * 
-     * @returns {void}
+     * @returns {Promise<void>}
      */
-    loadAll(): void
+    async loadAll(): Promise<void>
     {
+        await bot.logger.log("Loading slash command files...");
+
         this.populateModules();
         this.populateCommands();
 
@@ -114,79 +130,106 @@ export class SlashCommandHandler
             let command = require(`${cmdPath}`);
 
             // Set a new item in the Collection with the key as the command name and the value as the exported module
-            if ('data' in command && 'execute' in command)
+            if ('data' in command && ('execute' in command || 'autocomplete' in command))
             {
-                this.cmdJSONs.push(command.data.toJSON());
-                this.commands.set(command.data.name, command);
-                bot.logger.log(`START: Loaded slash command '${cmdName}'`);
+                if (this.commands.get(command.data.name))
+                {
+                    bot.logger.warn(`Duplicated command for '${command.data.name}' at ${cmdPath}`);
+                    delete require.cache[require.resolve(cmdPath)];
+                }
+                else
+                {
+                    this.cmdJSONs.push(command.data.toJSON());
+                    this.commands.set(command.data.name, command);
+                    bot.logger.log(`Loaded slash command '${cmdName}'`);
+                }
             } else
             {
                 bot.logger.warn(`The command at ${cmdPath} is missing a required "data" or "execute" property. Removing from cache.`);
                 delete require.cache[require.resolve(cmdPath)];
             }
         });
+
+        await bot.logger.log("Loaded all slash command files.");
     }
 
     /**
      * The function unloads all traditional command files and clears related 
      * data structures.
      * 
-     * @returns {void}
+     * @returns {Promise<void>}
      */
-    unloadAll(): void
+    async unloadAll(): Promise<void>
     {
-        // this.slashCommandFiles = [];
-        // this.slashCommandFolders = [];
-        // this.slashCmds.clear();
+        await bot.logger.log("Unloading slash command files...");
 
-        // for (let i = 0; i < this.slashCommandFiles.length; i++)
-        // {
-        //     let file = this.slashCommandFiles[i];
-        //     let commandName = file.split('/')[-1].split('.ts')[0];
-        //     let command = this.slashCmds.get(commandName);
-        //     delete require.cache[require.resolve(`./${command.data.name}.ts`)];
-        // }
+        this.commandFiles.forEach(cmdPath =>
+        {
+            delete require.cache[require.resolve(cmdPath)];
+        });
 
-        // TODO: De-register slash commands from Discord
+        this.modules.clear();
+        this.commandFiles.clear();
+        this.commands.clear();
+        this.cmdJSONs = [];
 
-        bot.logger.log("Slash command unloading not yet implemented.");
+        await bot.logger.log("Unloaded slash command files.");
     }
 
     /**
      * The function reloads all traditional commands by unloading and then 
      * loading them again.
      * 
-     * @returns {void}
+     * @returns {Promise<void>}
      */
-    reloadAll(): void
+    async reloadAll(): Promise<void>
     {
-        this.unloadAll();
-        this.loadAll();
-        this.registerAll();
+        await this.unloadAll();
+        await this.loadAll();
+        await this.deRegisterAll();
+        await this.registerAll();
     }
 
     /**
-     * This function refreshes the application commands for a Discord bot.
+     * This function registers all slash commands for a Discord bot.
      * 
      * @returns {Promise<void>}
      */
     async registerAll(): Promise<void>
     {
-        try
-        {
-            bot.logger.log(`Started refreshing ${this.cmdJSONs.length} application (/) commands.`);
+        await bot.logger.log(`Registering ${this.cmdJSONs.length} application (/) commands...`);
 
-            // The put method is used to fully refresh all commands in the guild with the current set
-            const data = await this.rest.put(
-                Routes.applicationGuildCommands(this.config.clientId, this.config.devGuild.guildId),
-                { body: this.cmdJSONs },
-            );
-
-            bot.logger.log(`Successfully reloaded ${this.cmdJSONs.length} application (/) commands.`);
-        } catch (error)
+        // The put method is used to fully refresh all commands in the guild with the current set
+        await this.rest.put(
+            Routes.applicationGuildCommands(this.config.clientId, this.config.devGuild.guildId),
+            { body: this.cmdJSONs },
+        ).then(async () =>
         {
-            // And of course, make sure you catch and log any errors!
-            bot.logger.error(error);
-        }
+            await bot.logger.log(`Successfully registered ${this.cmdJSONs.length} application (/) commands.`);
+        }).catch(async error => (
+            await bot.logger.error(error)
+        ));
     }
-};
+
+    /**
+     * This function de-registers all slash commands for a Discord bot.
+     * 
+     * @returns {Promise<void>}
+     */
+    async deRegisterAll(): Promise<void>
+    {
+        await bot.logger.log(`De-registering slash commands...`);
+
+        await this.rest.put(
+            Routes.applicationGuildCommands(this.config.clientId, this.config.devGuild.guildId),
+            { body: [] },
+        ).then(async () =>
+        {
+            await bot.logger.log('De-registering slash commands successful.');
+        }).catch(async error =>
+        {
+            await bot.logger.log('De-registering slash commands unsuccessful.');
+            await bot.logger.error(error);
+        });
+    }
+}

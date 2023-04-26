@@ -9,7 +9,7 @@
 //
 // ------------------------------------------------
 
-import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction, Interaction } from "discord.js";
 import { bot } from "index";
 import { SlashCommandType } from "@mytypes/SlashCommand";
 
@@ -21,10 +21,16 @@ let slashCommand: SlashCommandType = {
             load
                 .setName('load')
                 .setDescription('Load a command')
+                .addBooleanOption(boo => (
+                    boo
+                        .setName("all")
+                        .setDescription("Reload all commands?")
+                ))
                 .addStringOption(command => (
                     command
                         .setName("command")
                         .setDescription("The command to load")
+                        .setAutocomplete(true)
                 ))
         ))
         .addSubcommand(unload =>
@@ -32,32 +38,57 @@ let slashCommand: SlashCommandType = {
             unload
                 .setName('unload')
                 .setDescription('Unload a command')
+                .addBooleanOption(boo => (
+                    boo
+                        .setName("all")
+                        .setDescription("Reload all commands?")
+                ))
                 .addStringOption(command => (
                     command
                         .setName("command")
                         .setDescription("The command to load")
+                        .setAutocomplete(true)
                 ))
         ))
         .addSubcommand(reload => (
             reload
                 .setName('reload')
                 .setDescription('Reload a command')
+                .addBooleanOption(boo => (
+                    boo
+                        .setName("all")
+                        .setDescription("Reload all commands?")
+                ))
                 .addStringOption(command => (
                     command
                         .setName("command")
                         .setDescription("The command to load")
+                        .setAutocomplete(true)
                 ))
-        ))
-        .addSubcommand(reloadAll => (
-            reloadAll
-                .setName('reload-all')
-                .setDescription('Reload all commands')
         )),
     ownerOnly: true,
+    async autocomplete(c: ChatInputCommandInteraction)
+    {
+        const focusedValue = c.options.getFocused();
+        let choices: string[] = [];
+
+        bot.slashCommands.commands.forEach((v, k) =>
+        {
+            choices.push(k);
+        });
+
+        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+        await c.respond(
+            filtered.map(choice => ({ name: choice, value: choice })),
+        );
+    },
     async execute(interaction: ChatInputCommandInteraction)
     {
+
+
         const subCmd = interaction.options.getSubcommand();
         const cmd = interaction.options.getString('command');
+        const all = interaction.options.getBoolean(`all`);
 
         if (subCmd === 'load')
         {
@@ -79,30 +110,25 @@ let slashCommand: SlashCommandType = {
 
         else if (subCmd === 'reload')
         {
-            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
+            if (all)
+            {
+                await bot.logger.log(`Reloading all slash commands`);
+                await interaction.reply(`Reloading slash commands...`);
 
-            await interaction.reply
-                (`Command /cmd ${subCmd} was run.`);
-            return;
+                try
+                {
+                    await bot.slashCommands.reloadAll();
+                    await interaction.followUp("Reload successful.");
+
+                } catch (err)
+                {
+                    await bot.logger.error(err);
+                    await interaction.followUp("Reload unsuccessful.");
+                }
+            }
         }
 
-        else if (subCmd === 'reload-all')
-        {
-            await bot.logger.log(`Command /cmd ${subCmd} was run.`);
-
-            await interaction.reply
-                (`Command /cmd ${subCmd} was run.`);
-            return;
-        }
-
-        else
-        {
-            bot.logger.log(`Command /cmd ${subCmd} was run.`);
-
-            await interaction.reply
-                (`Command /cmd ${subCmd} was run.`);
-            return;
-        }
+        else await interaction.reply(`Invalid subcommand`); return;
     },
 };
 
